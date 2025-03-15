@@ -10,8 +10,16 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-initialize();
 
-app.use('/api', router);
-app.listen(port, () => 
-    console.log(`Server running on port http:/localhost:${port}`))
+
+// Initialize the database
+async function start() {
+    await initialize();
+    app.use('/api', router);
+    app.listen(port, () =>
+      console.log(`Server running on port http:/localhost:${port}`))
+  }
+  
+  start();
+  
+  export default app;

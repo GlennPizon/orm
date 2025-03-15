@@ -51,14 +51,15 @@ export const AppDataSource = new DataSource({
 
 // Function to initialize the Data Source
 export const initialize = async () => {
-    await AppDataSource.initialize().then(() => {
+    try {
+        await AppDataSource.initialize();
         console.log("Data Source has been initialized!");
-    }).catch((err) => {
+    } catch (err) {
         console.error("Error during Data Source initialization:", err);
-        createDB(dbName);
+        await createDB(dbName);
 
         console.log(`Database "${dbName}" created`)
-        initialize();
-    });
+        await initialize();
+    }
 };
 
